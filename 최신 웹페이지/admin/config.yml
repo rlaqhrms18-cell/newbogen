@@ -2,7 +2,7 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images/uploads"
+media_folder: "최신 웹페이지/images/uploads"
 public_folder: "/images/uploads"
 
 locale: "ko"
@@ -11,7 +11,7 @@ collections:
   - name: "posts"
     label: "글"
     label_singular: "글"
-    folder: "content/posts"
+    folder: "최신 웹페이지/content/posts"
     create: true
     delete: true
     slug: "{{fields.slug}}"
@@ -19,10 +19,10 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     fields:
-      - { label: "제목", name: "title", widget: "string", hint: "검색에 잘 잡히게 핵심 키워드를 앞쪽에. 예: 카드한도 올리는 법 2026 최신" }
-      - { label: "URL 주소(영문 소문자, 띄어쓰기 대신 -)", name: "slug", widget: "string", hint: "예: card-limit-guide  (한 번 정하면 바꾸지 마세요)" }
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "URL주소(영문 소문자, 띄어쓰기 대신 -)", name: "slug", widget: "string" }
       - { label: "카테고리", name: "category", widget: "string", default: "금융/신용" }
-      - { label: "태그", name: "tags", widget: "list", default: [], hint: "쉼표 대신 항목 추가 버튼으로" }
-      - { label: "요약(검색결과·미리보기 문장)", name: "summary", widget: "text" }
+      - { label: "태그", name: "tags", widget: "list", default: [] }
+      - { label: "요약", name: "summary", widget: "text" }
       - { label: "날짜", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
       - { label: "본문", name: "body", widget: "markdown" }
