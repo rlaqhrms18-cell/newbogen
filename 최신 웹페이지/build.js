@@ -11,7 +11,19 @@ const BV = "18D7AE69B70160AAE084C57E94C49DE3";
 const VERIFY =
 `  <meta name="google-site-verification" content="${GV}" />
   <meta name="naver-site-verification" content="${NV}" />
-  <meta name="msvalidate.01" content="${BV}" />`;
+  <meta name="msvalidate.01" content="${BV}" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4100339741871957" crossorigin="anonymous"></script>`;
+
+/* 방문 1건을 조회수 카운터(/.netlify/functions/hit)로 보냄. 실패해도 방문자 영향 없음. */
+const TRACK =
+`  <script>
+  (function(){try{
+    var p=(location.pathname||"/").replace(/index\\.html$/,"")||"/";
+    if(p.indexOf("/admin")===0||p.indexOf("/dashboard")===0)return;
+    var u="/.netlify/functions/hit?p="+encodeURIComponent(p)+"&t="+encodeURIComponent(document.title);
+    if(navigator.sendBeacon){navigator.sendBeacon(u);}else{fetch(u,{method:"POST",keepalive:true}).catch(function(){});}
+  }catch(e){}})();
+  </script>`;
 
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
 function inline(s){
@@ -246,6 +258,7 @@ ${bodyHtml}
   </div></footer>
   <script src="../js/site.js"></script>
   <script src="../js/article.js"></script>
+${TRACK}
 </body>
 </html>
 `;
@@ -296,6 +309,7 @@ ${VERIFY}
       <nav class="site-nav" id="catNav"></nav>
       <div class="header-actions">
         <button class="icon-btn" id="themeToggle" title="다크/라이트 전환">🌙</button>
+        <a class="btn btn-ghost btn-sm" href="/dashboard/">📊 통계</a>
         <a class="btn btn-primary btn-sm" href="/admin/">관리자</a>
       </div>
     </div>
@@ -329,6 +343,7 @@ ${cards}
   <script src="js/home.js"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}});}</script>
+${TRACK}
 </body>
 </html>
 `;
@@ -342,6 +357,6 @@ fs.writeFileSync(path.join(__dirname,"sitemap.xml"),
 
 /* ---- robots.txt ---- */
 fs.writeFileSync(path.join(__dirname,"robots.txt"),
-  "User-agent: *\nAllow: /\nDisallow: /admin/\n\nUser-agent: Yeti\nAllow: /\n\nSitemap: "+BASE+"/sitemap.xml\n");
+  "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /dashboard/\n\nUser-agent: Yeti\nAllow: /\n\nSitemap: "+BASE+"/sitemap.xml\n");
 
 console.log("BUILD OK — posts:", posts.map(p=>p.file).join(", "));

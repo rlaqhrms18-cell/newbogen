@@ -2,5 +2,11 @@
   "name": "jisikchango",
   "version": "1.0.0",
   "private": true,
-  "scripts": { "build": "node build.js" }
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "netlify-cli": "^26.1.0"
+  }
 }
