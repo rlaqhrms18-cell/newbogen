@@ -1,0 +1,11 @@
+{
+  "name": "jisikchango",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "netlify-cli": "^26.1.0"
+  }
+}

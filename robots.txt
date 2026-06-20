@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+
+User-agent: Yeti
+Allow: /
+
+Sitemap: https://gleeful-crostata-f32160.netlify.app/sitemap.xml
