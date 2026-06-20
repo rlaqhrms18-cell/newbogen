@@ -6,7 +6,6 @@
     "build": "node build.js"
   },
   "dependencies": {
-    "@netlify/blobs": "^8.1.0",
     "netlify-cli": "^26.1.0"
   }
 }

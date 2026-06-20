@@ -39,5 +39,12 @@
 3. 조회수는 **배포 후 방문부터** 집계됨(과거 데이터 없음). Netlify Blobs는 Netlify에서 추가 설정 없이 동작.
 4. "📊 통계" 링크는 홈에 공개 노출(클릭해도 로그인 안 하면 데이터 안 보임). 완전히 숨기려면 링크 제거하고 `/dashboard/` 직접 접속만 사용.
 
+## 7. 배포 실패 진단·수정 (2026-06-20)
+- **증상**: Netlify 빌드가 `node build.js` 단계에서 코드 1로 종료(또는 "build.js 없음"으로 보고됨).
+- **확인된 진짜 원인**: `package.json`에 `@netlify/blobs`를 직접 추가했으나 기존 `package-lock.json`은 그대로라 둘이 불일치 → Netlify의 `npm ci`가 "package.json과 package-lock.json이 일치하지 않음"으로 실패. (작업 중 OneDrive 동기화 지연으로 잠깐 깨진 `build.js`/`package.json`이 푸시됐을 가능성도 있었음.)
+- **수정**: `package.json`을 원래대로(`netlify-cli`만) 되돌려 lock과 일치시킴. `@netlify/blobs`는 `netlify-cli`에 이미 포함돼 transitive로 설치됨(설치본 v10.7.9, 코드의 getStore/setJSON/list API 호환 확인). 함수 번들러가 node_modules에서 자동 해결하므로 직접 선언 불필요.
+- **검증**: 로컬 `node build.js` exit 0, `require('@netlify/blobs')` 정상.
+- **재배포 시 주의**: 수정된 `build.js`·`package.json`과 새 폴더(`netlify/`, `dashboard/`), 재생성된 `index.html`/`posts/`를 저장소 **루트**에 올려야 함(하위 폴더로 중첩 금지). 깃 연동 배포면 푸시 시 자동 빌드.
+
 ## 5. 작업 진행 원칙
 - 사용자가 "시작" 신호를 줄 때까지 맥락 수집·질문만. 임의로 구현 착수 금지.
